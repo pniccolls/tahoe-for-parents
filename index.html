@@ -80,46 +80,12 @@
     margin:0;
   }
 
-  .hotel-card{
-    margin:16px 20px -34px;
-    background:var(--card);
-    border-radius:var(--radius);
-    box-shadow:0 10px 30px rgba(15,60,60,0.18);
-    padding:16px 18px;
-    position:relative;
-    z-index:2;
-    display:flex;
-    gap:14px;
-    align-items:center;
-  }
-  .hotel-icon{
-    width:46px; height:46px; min-width:46px;
-    border-radius:12px;
-    background:var(--lake-soft);
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px;
-  }
-  .hotel-info{ flex:1; min-width:0; }
-  .hotel-info .name{ font-weight:700; font-size:15px; }
-  .hotel-info .addr{ font-size:13px; color:var(--ink-soft); margin-top:2px; }
-  .hotel-link{
-    font-size:13px;
-    font-weight:700;
-    color:var(--lake);
-    white-space:nowrap;
-    border:1.5px solid var(--lake);
-    border-radius:100px;
-    padding:7px 12px;
-    text-decoration:none;
-  }
-
   /* ---------- Day tabs ---------- */
   nav.tabs{
     position:sticky; top:0; z-index:10;
     display:flex;
     gap:8px;
-    padding:52px 16px 12px;
-    margin-top:-40px;
+    padding:16px 16px 12px;
     background:linear-gradient(180deg, var(--bg) 65%, rgba(246,244,238,0));
   }
   nav.tabs button{
@@ -142,7 +108,10 @@
   }
   nav.tabs button[data-day="1"].active{ background:var(--ink-soft); }
   nav.tabs button[data-day="2"].active{ background:var(--lake); }
+  nav.tabs button[data-day="2b"].active{ background:var(--pine); }
   nav.tabs button[data-day="3"].active{ background:var(--gold); }
+  nav.tabs{ flex-wrap:wrap; }
+  nav.tabs button{ min-width: 78px; }
 
   /* ---------- Day panels ---------- */
   main{ padding: 4px 20px 40px; }
@@ -160,6 +129,7 @@
   }
   #panel-1 .tag{ background:#EDEBE4; color:var(--ink-soft); }
   #panel-2 .tag{ background:var(--lake-soft); color:var(--lake); }
+  #panel-2b .tag{ background:var(--pine-soft); color:var(--pine); }
   #panel-3 .tag{ background:var(--gold-soft); color:var(--gold); }
   .day-head h2{ font-size:22px; margin:0 0 4px; }
   .day-head p{ margin:0; color:var(--ink-soft); font-size:14.5px; }
@@ -190,6 +160,7 @@
   }
   #panel-1 .stop{ --dot: var(--ink-soft); }
   #panel-2 .stop{ --dot: var(--lake); }
+  #panel-2b .stop{ --dot: var(--pine); }
   #panel-3 .stop{ --dot: var(--gold); }
 
   .stop-card{
@@ -224,6 +195,7 @@
     background: var(--lake-soft); color:var(--lake);
   }
   #panel-1 .maps-btn{ background:#EDEBE4; color:var(--ink-soft); }
+  #panel-2b .maps-btn{ background:var(--pine-soft); color:var(--pine); }
   #panel-3 .maps-btn{ background:var(--gold-soft); color:var(--gold); }
 
   .tip{
@@ -277,18 +249,10 @@
   <p class="trip-sub">Reno 出发 → 太浩湖北岸/南岸/西岸 → 返回 Oakland</p>
 </header>
 
-<div class="hotel-card">
-  <div class="hotel-icon">🏨</div>
-  <div class="hotel-info">
-    <div class="name">Eldorado Reno</div>
-    <div class="addr">345 N Virginia St, Reno, NV · 住2晚</div>
-  </div>
-  <a class="hotel-link" href="https://maps.google.com/?cid=2017905494250481167" target="_blank" rel="noopener">地图</a>
-</div>
-
 <nav class="tabs">
   <button class="active" data-day="1" onclick="showDay(1)">Day 1<span class="d">7/31 周五</span></button>
   <button data-day="2" onclick="showDay(2)">Day 2<span class="d">8/1 周六</span></button>
+  <button data-day="2b" onclick="showDay('2b')">Day 2 备选<span class="d">若无车位</span></button>
   <button data-day="3" onclick="showDay(3)">Day 3<span class="d">8/2 周日</span></button>
 </nav>
 
@@ -358,7 +322,7 @@
           <div class="stop-time">10:45 AM – 1:00 PM</div>
           <div class="stop-title">Sand Harbor State Park</div>
           <p class="stop-desc">太浩湖最美的沙滩之一,水清得不像话。</p>
-          <div class="tip">🅿️ <span><b>停车提醒：</b>旺季停车位很紧张,建议提前在 parks.nv.gov 网站订停车位，否则可能到了发现停不了车。</span></div>
+          <div class="tip">🅿️ <span><b>停车提醒：</b>旺季停车位很紧张,建议提前在 parks.nv.gov 网站订停车位，否则可能到了发现停不了车。<b>如果到了当天早上还没订到车位，请切换到「Day 2 备选」标签页</b>，那边有不需要预约的替代方案。</span></div>
           <div class="stop-actions">
             <a class="maps-btn" href="https://maps.google.com/?cid=15123682057624681031" target="_blank" rel="noopener">📍 打开地图</a>
           </div>
@@ -400,6 +364,96 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- DAY 2 BACKUP (Sand Harbor no reservation) -->
+  <section class="day-panel" id="panel-2b">
+    <div class="day-head">
+      <span class="tag">备选方案 · 无需预约</span>
+      <h2>如果 Sand Harbor 订不到车位</h2>
+      <p>用 Zephyr Cove Beach 替代 Sand Harbor，其余行程基本不变</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">8:00 AM · 出发</div>
+          <div class="stop-title">从 Eldorado Reno 出发</div>
+          <p class="stop-desc">和主计划一样，车程约45分钟到北岸。</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">8:45 – 9:30 AM</div>
+          <div class="stop-title">Incline Village</div>
+          <p class="stop-desc">和主计划一样，北岸湖边小镇，喝杯咖啡、逛一下。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=7882729399095415883" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-note">🚗 沿东岸 Hwy 28 南下（会路过 Sand Harbor 大门，如果恰好开放可以试着进，不行就继续往前开，不用停留纠结）</div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">9:30 – 12:00 PM</div>
+          <div class="stop-title">Zephyr Cove Beach（替代 Sand Harbor）</div>
+          <p class="stop-desc">不需要预约，直接开车到停车场付费进入即可（约$10-12/车），沙滩平坦好走，有餐厅 Sunset Bar &amp; Grille 可以坐下休息、吃东西，很适合代替 Sand Harbor 这一段。</p>
+          <div class="tip">🅿️ <span><b>小提醒：</b>停车场有时也会满，建议尽量在10点前到达；周末车位比较紧张。</span></div>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=7825645262323609421" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-note">🚗 继续沿 Hwy 50/89 前往 Emerald Bay，约30-40分钟，中途可以找地方吃午饭</div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">1:00 – 2:30 PM</div>
+          <div class="stop-title">Emerald Bay State Park</div>
+          <p class="stop-desc">和主计划一样，太浩湖最经典机位，俯瞰翡翠湾。</p>
+          <div class="tip">🅿️ <span>停车位同样抢手，路边合规位置也可以停。</span></div>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=7550396856752516048" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">2:45 – 4:00 PM</div>
+          <div class="stop-title">South Lake Tahoe · Heavenly Village</div>
+          <p class="stop-desc">和主计划一样，南岸小镇，逛街、购物、休息一下再返程。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=9690111070590005094" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-note">🚗 返回 Reno，车程约1小时</div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">5:00 PM 左右</div>
+          <div class="stop-title">回到 Eldorado Reno</div>
+          <p class="stop-desc">比主计划回来得更早一些，正好多一点时间休息。</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary-card">
+      <h3>和主计划的区别</h3>
+      <ul>
+        <li>用 <b>Zephyr Cove Beach</b> 替代 <b>Sand Harbor</b>，不需要提前预约</li>
+        <li>其余行程（Incline Village、Emerald Bay、South Lake Tahoe）完全一样</li>
+        <li>全天路线更紧凑，晚上回 Reno 的时间也提前了</li>
+      </ul>
     </div>
   </section>
 

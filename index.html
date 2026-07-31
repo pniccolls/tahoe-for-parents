@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>太浩湖两日游 · 行程单</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F6F4EE;
+    --card: #FFFFFF;
+    --ink: #212A2C;
+    --ink-soft: #5B635F;
+    --line: #E1DCCF;
+
+    --lake: #0F5E6B;
+    --lake-soft: #E4EFEE;
+    --pine: #3F5E45;
+    --pine-soft: #E9EFE7;
+    --gold: #B8802E;
+    --gold-soft: #F4EBDA;
+
+    --radius: 18px;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+  html,body{
+    margin:0; padding:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- Header ---------- */
+  header.hero{
+    padding: 30px 20px 22px;
+    background: linear-gradient(180deg, #12454F 0%, #0F5E6B 100%);
+    color:#F6F4EE;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute; right:-40px; bottom:-60px;
+    width:220px; height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 70%);
+  }
+  .eyebrow{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:#BFE3E1;
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  h1.trip-title{
+    font-size:28px;
+    margin:0 0 6px;
+    line-height:1.2;
+    color:#fff;
+  }
+  .trip-sub{
+    font-size:15px;
+    color:#D8ECEA;
+    margin:0;
+  }
+
+  .hotel-card{
+    margin:16px 20px -34px;
+    background:var(--card);
+    border-radius:var(--radius);
+    box-shadow:0 10px 30px rgba(15,60,60,0.18);
+    padding:16px 18px;
+    position:relative;
+    z-index:2;
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .hotel-icon{
+    width:46px; height:46px; min-width:46px;
+    border-radius:12px;
+    background:var(--lake-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px;
+  }
+  .hotel-info{ flex:1; min-width:0; }
+  .hotel-info .name{ font-weight:700; font-size:15px; }
+  .hotel-info .addr{ font-size:13px; color:var(--ink-soft); margin-top:2px; }
+  .hotel-link{
+    font-size:13px;
+    font-weight:700;
+    color:var(--lake);
+    white-space:nowrap;
+    border:1.5px solid var(--lake);
+    border-radius:100px;
+    padding:7px 12px;
+    text-decoration:none;
+  }
+
+  /* ---------- Day tabs ---------- */
+  nav.tabs{
+    position:sticky; top:0; z-index:10;
+    display:flex;
+    gap:8px;
+    padding:52px 16px 12px;
+    margin-top:-40px;
+    background:linear-gradient(180deg, var(--bg) 65%, rgba(246,244,238,0));
+  }
+  nav.tabs button{
+    flex:1;
+    appearance:none; border:none;
+    background:var(--card);
+    border:1.5px solid var(--line);
+    border-radius:100px;
+    padding:11px 6px;
+    font-family:'Inter';
+    font-weight:700;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+  }
+  nav.tabs button .d{ font-size:11px; font-weight:600; opacity:0.75; }
+  nav.tabs button.active{
+    color:#fff;
+    border-color:transparent;
+  }
+  nav.tabs button[data-day="1"].active{ background:var(--ink-soft); }
+  nav.tabs button[data-day="2"].active{ background:var(--lake); }
+  nav.tabs button[data-day="3"].active{ background:var(--gold); }
+
+  /* ---------- Day panels ---------- */
+  main{ padding: 4px 20px 40px; }
+  .day-panel{ display:none; animation: fade .25s ease; }
+  .day-panel.active{ display:block; }
+  @keyframes fade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  .day-head{ margin: 18px 4px 16px; }
+  .day-head .tag{
+    display:inline-block;
+    font-size:12px; font-weight:700;
+    letter-spacing:0.06em; text-transform:uppercase;
+    padding:4px 10px; border-radius:100px;
+    margin-bottom:8px;
+  }
+  #panel-1 .tag{ background:#EDEBE4; color:var(--ink-soft); }
+  #panel-2 .tag{ background:var(--lake-soft); color:var(--lake); }
+  #panel-3 .tag{ background:var(--gold-soft); color:var(--gold); }
+  .day-head h2{ font-size:22px; margin:0 0 4px; }
+  .day-head p{ margin:0; color:var(--ink-soft); font-size:14.5px; }
+
+  /* timeline */
+  .timeline{
+    position:relative;
+    padding-left:26px;
+    margin-top:6px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute; left:8px; top:6px; bottom:6px;
+    width:2px;
+    background: var(--line);
+  }
+  .stop{
+    position:relative;
+    margin-bottom:16px;
+  }
+  .stop::before{
+    content:"";
+    position:absolute; left:-26px; top:4px;
+    width:16px; height:16px;
+    border-radius:50%;
+    background:var(--card);
+    border:3px solid var(--dot, var(--lake));
+  }
+  #panel-1 .stop{ --dot: var(--ink-soft); }
+  #panel-2 .stop{ --dot: var(--lake); }
+  #panel-3 .stop{ --dot: var(--gold); }
+
+  .stop-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:14px 16px;
+  }
+  .stop-time{
+    font-size:12.5px; font-weight:800;
+    color:var(--ink-soft);
+    letter-spacing:0.02em;
+    margin-bottom:3px;
+  }
+  .stop-title{
+    font-family:'Fraunces'; font-weight:600;
+    font-size:17px;
+    margin:0 0 5px;
+  }
+  .stop-desc{
+    font-size:14.5px;
+    color:#3B4340;
+    margin:0 0 10px;
+  }
+  .stop-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+  .maps-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:13px; font-weight:700;
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:100px;
+    background: var(--lake-soft); color:var(--lake);
+  }
+  #panel-1 .maps-btn{ background:#EDEBE4; color:var(--ink-soft); }
+  #panel-3 .maps-btn{ background:var(--gold-soft); color:var(--gold); }
+
+  .tip{
+    display:flex; gap:8px;
+    background: #FFF8E9;
+    border:1px solid #F1E2B8;
+    border-radius:12px;
+    padding:10px 12px;
+    font-size:13.5px;
+    color:#6B551E;
+    margin-top:4px;
+  }
+  .tip b{ color:#6B551E; }
+
+  .drive-note{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 14px;
+    margin: 6px 0 16px 26px;
+    background:transparent;
+    border-left:2px dashed var(--line);
+    padding-left:16px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+
+  .summary-card{
+    margin-top:22px;
+    background: var(--pine-soft);
+    border-radius: var(--radius);
+    padding:16px 18px;
+  }
+  .summary-card h3{
+    font-size:15px; margin:0 0 8px; color:var(--pine);
+  }
+  .summary-card ul{ margin:0; padding-left:18px; font-size:14px; color:#2E3F31; }
+  .summary-card li{ margin-bottom:4px; }
+
+  footer{
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+    padding: 8px 20px 30px;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="eyebrow">7月31日 — 8月2日 · 3天2晚</p>
+  <h1 class="trip-title">太浩湖两日游</h1>
+  <p class="trip-sub">Reno 出发 → 太浩湖北岸/南岸/西岸 → 返回 Oakland</p>
+</header>
+
+<div class="hotel-card">
+  <div class="hotel-icon">🏨</div>
+  <div class="hotel-info">
+    <div class="name">Eldorado Reno</div>
+    <div class="addr">345 N Virginia St, Reno, NV · 住2晚</div>
+  </div>
+  <a class="hotel-link" href="https://maps.google.com/?cid=2017905494250481167" target="_blank" rel="noopener">地图</a>
+</div>
+
+<nav class="tabs">
+  <button class="active" data-day="1" onclick="showDay(1)">Day 1<span class="d">7/31 周五</span></button>
+  <button data-day="2" onclick="showDay(2)">Day 2<span class="d">8/1 周六</span></button>
+  <button data-day="3" onclick="showDay(3)">Day 3<span class="d">8/2 周日</span></button>
+</nav>
+
+<main>
+
+  <!-- DAY 1 -->
+  <section class="day-panel active" id="panel-1">
+    <div class="day-head">
+      <span class="tag">抵达 · Reno</span>
+      <h2>晚上抵达,入住休息</h2>
+      <p>今天不安排外出,轻松休息为明天的太浩湖长途做准备</p>
+    </div>
+
+    <div class="timeline">
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">晚间抵达</div>
+          <div class="stop-title">入住 Eldorado Reno</div>
+          <p class="stop-desc">办理入住,345 N Virginia St, Reno。酒店内 Cin Cin、Roxy 等餐厅都可以直接解决晚饭,不用再出门折腾。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=2017905494250481167" target="_blank" rel="noopener">📍 打开地图</a>
+            <a class="maps-btn" href="tel:+17757865700">📞 +1 775-786-5700</a>
+          </div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">睡前</div>
+          <div class="stop-title">早点休息</div>
+          <p class="stop-desc">明天全天在太浩湖跑一个大环线,车程较长,建议早睡,养足精神。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAY 2 -->
+  <section class="day-panel" id="panel-2">
+    <div class="day-head">
+      <span class="tag">太浩湖 · 北岸+南岸环线</span>
+      <h2>一天走完最美的两个湖岸</h2>
+      <p>全程约3.5–4小时车程(不含游玩),建议早上8点前出发</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">8:00 AM · 出发</div>
+          <div class="stop-title">从 Eldorado Reno 出发</div>
+          <p class="stop-desc">车程约45分钟到北岸,建议早点出发避开人流。</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">8:45 – 10:30 AM</div>
+          <div class="stop-title">Incline Village</div>
+          <p class="stop-desc">北岸湖边小镇,喝杯咖啡、逛一下,顺便欣赏北岸湖景。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=7882729399095415883" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">10:45 AM – 1:00 PM</div>
+          <div class="stop-title">Sand Harbor State Park</div>
+          <p class="stop-desc">太浩湖最美的沙滩之一,水清得不像话。</p>
+          <div class="tip">🅿️ <span><b>停车提醒：</b>旺季停车位很紧张,建议提前在 parks.nv.gov 网站订停车位，否则可能到了发现停不了车。</span></div>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=15123682057624681031" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-note">🚗 沿东岸南下，途中找地方吃午饭（约1小时车程）</div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">2:30 – 4:00 PM</div>
+          <div class="stop-title">Emerald Bay State Park</div>
+          <p class="stop-desc">太浩湖最经典机位，俯瞰翡翠湾。体力允许可走1英里步道下到湖边，体力有限的话在观景台拍照就很值了。</p>
+          <div class="tip">🅿️ <span>停车位同样抢手，路边合规位置也可以停。</span></div>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=7550396856752516048" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">4:15 – 5:30 PM</div>
+          <div class="stop-title">South Lake Tahoe · Heavenly Village</div>
+          <p class="stop-desc">南岸小镇，逛街、购物、喝杯饮料，休息一下再返程。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=9690111070590005094" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-note">🚗 返回 Reno，车程约1小时</div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">7:00 PM 左右</div>
+          <div class="stop-title">回到 Eldorado Reno</div>
+          <p class="stop-desc">晚餐、赌场、休息，结束充实的一天。</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DAY 3 -->
+  <section class="day-panel" id="panel-3">
+    <div class="day-head">
+      <span class="tag">西岸顺路游 → Oakland</span>
+      <h2>不赶时间，顺路看西岸</h2>
+      <p>I-80 正好经过太浩湖西北角，不绕路，晚饭前到 Oakland</p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">8:00 AM</div>
+          <div class="stop-title">Eldorado Reno 退房出发</div>
+          <p class="stop-desc">走 I-80 西行，约50分钟到 Tahoe City。</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">8:50 – 9:20 AM</div>
+          <div class="stop-title">Commons Beach · Tahoe City</div>
+          <p class="stop-desc">湖边小沙滩，免费停车，能看到著名的"硬币熊"雕塑（Penny Bear），适合下车走走、拍照。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=14996776149526475790" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="drive-note">🚗 沿西岸 CA-89 南行，约15-20分钟，一路沿湖景色很美</div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">9:40 – 11:00 AM</div>
+          <div class="stop-title">Sugar Pine Point State Park</div>
+          <p class="stop-desc">西岸最幽静的一段，有百年历史的 Ehrman Mansion 庄园可以参观，湖边步道好走，很适合慢慢逛。</p>
+          <div class="stop-actions">
+            <a class="maps-btn" href="https://maps.google.com/?cid=18114274733577190517" target="_blank" rel="noopener">📍 打开地图</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">11:00 AM 起</div>
+          <div class="stop-title">沿 CA-89 北返 Truckee，接回 I-80 西行</div>
+          <p class="stop-desc">经 Sacramento 一路开往 Oakland，全程约3.5–4小时，视路况而定。可在 Sacramento 附近服务区休息、吃午饭。</p>
+          <div class="tip">🚦 <span>周日 I-80 过 Donner Summit / Sacramento 段有时会堵车，建议中午前从西岸出发，留出缓冲时间。</span></div>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-time">约 3:00 – 3:30 PM</div>
+          <div class="stop-title">到达 Oakland</div>
+          <p class="stop-desc">晚饭前有充裕时间休息，行程圆满结束 🎉</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary-card">
+      <h3>三天概览</h3>
+      <ul>
+        <li>7/31 晚：抵达入住 Eldorado Reno</li>
+        <li>8/1 全天：北岸 + 南岸大环线，晚上回 Reno 住</li>
+        <li>8/2 上午：西岸顺路游，直接开往 Oakland，晚饭前到</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>点击每个地点的"打开地图"可以直接跳转导航 · 祝旅途愉快 🚗🌲</footer>
+
+<script>
+  function showDay(n){
+    document.querySelectorAll('.day-panel').forEach(function(el){ el.classList.remove('active'); });
+    document.querySelectorAll('nav.tabs button').forEach(function(el){ el.classList.remove('active'); });
+    document.getElementById('panel-'+n).classList.add('active');
+    document.querySelector('nav.tabs button[data-day="'+n+'"]').classList.add('active');
+  }
+</script>
+
+</body>
+</html>
